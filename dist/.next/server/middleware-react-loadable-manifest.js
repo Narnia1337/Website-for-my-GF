@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"app/components/love-map.tsx -> ./leaflet-map":{"id":9953,"files":["static/css/857aa62baa17c894.css","static/chunks/d0deef33.bd75b11a952a2d3d.js","static/chunks/953.ce6e1107030c7ecd.js"]},"app/surprise/page.tsx -> react-confetti":{"id":4030,"files":["static/chunks/30.ecec43a87fae6a3c.js"]}}';
