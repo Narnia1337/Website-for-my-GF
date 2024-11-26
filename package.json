@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
     "scripts": {
+    "dev": "next dev",
     "build": "next build",
-    "postbuild": "mkdir -p dist && cp -r .next dist/"
+    "start": "next start"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.0",
