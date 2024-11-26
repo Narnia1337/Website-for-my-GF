@@ -2,11 +2,9 @@
   "name": "eesha-website",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
+    "scripts": {
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "postbuild": "mkdir -p dist && cp -r .next dist/"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.0",
