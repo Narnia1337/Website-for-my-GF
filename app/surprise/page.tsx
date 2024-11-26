@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import confetti from 'canvas-confetti'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -9,13 +8,6 @@ export default function SurprisePage() {
   const router = useRouter()
 
   useEffect(() => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#ec4899', '#93c5fd', '#f9a8d4'] // Pink and blue colors
-    })
-
     const timer = setTimeout(() => {
       router.push('/love-letter')
     }, 5000) // Redirect after 5 seconds
