@@ -1,4 +1,6 @@
 {
+  "/love-letter/full-essay/page": "app/love-letter/full-essay/page.js",
   "/page": "app/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/surprise/page": "app/surprise/page.js",
+  "/love-letter/page": "app/love-letter/page.js"
 }
