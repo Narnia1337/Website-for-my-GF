@@ -1,66 +1,54 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { Play, Pause, SkipBack, SkipForward } from 'lucide-react'
+import { useState, useEffect } from 'react'
 
-const playlist = [
-  { title: "Our Song", artist: "Artist Name", src: "/path-to-song1.mp3" },
-  { title: "First Dance", artist: "Artist Name", src: "/path-to-song2.mp3" },
-  { title: "Road Trip Anthem", artist: "Artist Name", src: "/path-to-song3.mp3" },
-]
+interface Song {
+  title: string
+  artist: string
+  embedCode: string
+}
+
+const songOfTheDay: Song = {
+  title: "Get You (feat. Kali Uchis)",
+  artist: "Daniel Caesar",
+  embedCode: "https://embed.music.apple.com/us/album/get-you-feat-kali-uchis/1265893523?i=1265893529"
+}
 
 export function MusicPlayer() {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [currentTrack, setCurrentTrack] = useState(0)
-  const audioRef = useRef<HTMLAudioElement>(null)
-
-  const togglePlay = () => {
-    if (isPlaying) {
-      audioRef.current?.pause()
-    } else {
-      audioRef.current?.play()
-    }
-    setIsPlaying(!isPlaying)
-  }
-
-  const playNext = () => {
-    setCurrentTrack((prevTrack) => (prevTrack + 1) % playlist.length)
-  }
-
-  const playPrevious = () => {
-    setCurrentTrack((prevTrack) => (prevTrack - 1 + playlist.length) % playlist.length)
-  }
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.src = playlist[currentTrack].src
-      if (isPlaying) {
-        audioRef.current.play()
-      }
-    }
-  }, [currentTrack])
+    setIsLoaded(true)
+  }, [])
 
   return (
     <div className="bg-blue-100 p-6 rounded-lg shadow-md">
-      <h3 className="text-2xl font-semibold mb-4 text-blue-600 font-playfair">Our Playlist</h3>
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-pink-600 font-semibold">{playlist[currentTrack].title}</p>
-          <p className="text-blue-500">{playlist[currentTrack].artist}</p>
-        </div>
-        <div className="flex items-center space-x-4">
-          <button onClick={playPrevious} className="text-pink-500 hover:text-pink-600">
-            <SkipBack size={24} />
-          </button>
-          <button onClick={togglePlay} className="text-pink-500 hover:text-pink-600">
-            {isPlaying ? <Pause size={32} /> : <Play size={32} />}
-          </button>
-          <button onClick={playNext} className="text-pink-500 hover:text-pink-600">
-            <SkipForward size={24} />
-          </button>
-        </div>
+      <h3 className="text-2xl font-semibold mb-4 text-blue-600 font-playfair">Song of the Day</h3>
+      <div className="space-y-2 mb-4">
+        <p className="font-semibold text-pink-600">{songOfTheDay.title}</p>
+        <p className="text-sm text-blue-500">{songOfTheDay.artist}</p>
       </div>
-      <audio ref={audioRef} onEnded={playNext} />
+      {isLoaded && (
+        <div className="relative pt-[56.25%]">
+          <iframe 
+            title={`${songOfTheDay.title} by ${songOfTheDay.artist}`}
+            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" 
+            frameBorder="0" 
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              maxWidth: '660px',
+              margin: '0 auto',
+              borderRadius: '10px',
+            }}
+            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" 
+            src={songOfTheDay.embedCode}
+          ></iframe>
+        </div>
+      )}
     </div>
   )
 }

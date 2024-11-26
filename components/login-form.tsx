@@ -17,7 +17,7 @@ export function LoginForm() {
     event.preventDefault()
     setIsLoading(true)
 
-    if (password.toLowerCase() === 'july15') {
+    if (password.toLowerCase() === '1210') {
       setTimeout(() => {
         router.push('/surprise')
       }, 1000)
@@ -86,7 +86,7 @@ export function LoginForm() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.6 }}
       >
-        Hint: It's a day we both cherish ❤️ (Format: monthDD)
+        Hint: It&apos;s my phone password ❤️ (Format: ####)
       </motion.p>
     </motion.div>
   )

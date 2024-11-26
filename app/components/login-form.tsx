@@ -86,7 +86,7 @@ export function LoginForm() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.6 }}
       >
-        Hint: It's my phone password (Format: ####)
+        Hint: It&apos;s my phone password ❤️ (Format: ####)
       </motion.p>
     </motion.div>
   )

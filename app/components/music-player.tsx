@@ -31,6 +31,7 @@ export function MusicPlayer() {
       {isLoaded && (
         <div className="relative pt-[56.25%]">
           <iframe 
+            title={`${songOfTheDay.title} by ${songOfTheDay.artist}`}
             allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" 
             frameBorder="0" 
             style={{
