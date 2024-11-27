@@ -6,7 +6,7 @@ import { Pause, Play } from 'lucide-react'
 const song = {
   title: "Get You (feat. Kali Uchis)",
   artist: "Daniel Caesar",
-  src: "/path-to-your-audio-file.mp3",  // Replace with the actual path to your MP3 file
+  src: "/get-you.mp3",  // Replace with the actual path to your MP3 file
   startTime: 0  // Set this to the desired start time in seconds
 }
 
