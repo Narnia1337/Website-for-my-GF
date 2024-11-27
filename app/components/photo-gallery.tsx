@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 
 const photos = [
@@ -18,6 +18,19 @@ const photos = [
 
 export function PhotoGallery() {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
+  const [revealedCount, setRevealedCount] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRevealedCount(prev => {
+        if (prev < photos.length - 1) return prev + 1
+        clearInterval(timer)
+        return prev
+      })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
 
   return (
     <div className="py-12 bg-gradient-to-r from-pink-50 to-blue-50">
@@ -30,8 +43,8 @@ export function PhotoGallery() {
             <motion.div
               key={photo}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              animate={index <= revealedCount ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               className="relative aspect-[3/4] cursor-pointer"
               onClick={() => setSelectedPhoto(photo)}
             >
@@ -39,7 +52,7 @@ export function PhotoGallery() {
                 src={photo}
                 alt="Eesha"
                 fill
-                className="object-cover rounded-lg"
+                className="object-cover rounded-lg border-4 border-pink-300"
               />
             </motion.div>
           ))}

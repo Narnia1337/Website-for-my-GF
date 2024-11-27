@@ -1,54 +1,68 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Music, Pause, Play } from 'lucide-react'
 
-interface Song {
-  title: string
-  artist: string
-  embedCode: string
-}
-
-const songOfTheDay: Song = {
+const song = {
   title: "Get You (feat. Kali Uchis)",
   artist: "Daniel Caesar",
-  embedCode: "https://embed.music.apple.com/us/album/get-you-feat-kali-uchis/1265893523?i=1265893529"
+  src: "/get-you.mp3",  // Replace with the actual path to your MP3 file
+  startTime: 69  // Set this to the desired start time in seconds
 }
 
 export function MusicPlayer() {
-  const [isLoaded, setIsLoaded] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   useEffect(() => {
-    setIsLoaded(true)
+    const audio = audioRef.current
+    if (audio) {
+      audio.currentTime = song.startTime
+      audio.volume = 0.2  // Set initial volume to 20%
+      audio.play().catch(error => console.log("Autoplay prevented:", error))
+      setIsPlaying(true)
+
+      const handleEnded = () => {
+        audio.currentTime = song.startTime
+        audio.play()
+      }
+
+      audio.addEventListener('ended', handleEnded)
+
+      return () => {
+        audio.removeEventListener('ended', handleEnded)
+      }
+    }
   }, [])
 
+  const togglePlay = () => {
+    const audio = audioRef.current
+    if (audio) {
+      if (isPlaying) {
+        audio.pause()
+      } else {
+        audio.play()
+      }
+      setIsPlaying(!isPlaying)
+    }
+  }
+
   return (
-    <div className="bg-blue-100 p-6 rounded-lg shadow-md">
-      <h3 className="text-2xl font-semibold mb-4 text-blue-600 font-playfair">Song of the Day</h3>
-      <div className="space-y-2 mb-4">
-        <p className="font-semibold text-pink-600">{songOfTheDay.title}</p>
-        <p className="text-sm text-blue-500">{songOfTheDay.artist}</p>
-      </div>
-      {isLoaded && (
-        <div className="relative pt-[56.25%]">
-          <iframe 
-            title={`${songOfTheDay.title} by ${songOfTheDay.artist}`}
-            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" 
-            frameBorder="0" 
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              maxWidth: '660px',
-              margin: '0 auto',
-              borderRadius: '10px',
-            }}
-            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" 
-            src={songOfTheDay.embedCode}
-          ></iframe>
+    <div className="fixed bottom-4 right-4 z-50">
+      <div className="bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-lg flex items-center space-x-2">
+        <button onClick={togglePlay} className="text-pink-500 hover:text-pink-600 transition-colors">
+          {isPlaying ? <Pause size={24} /> : <Play size={24} />}
+        </button>
+        <div className="text-sm">
+          <p className="font-semibold text-pink-600">{song.title}</p>
+          <p className="text-blue-500">{song.artist}</p>
         </div>
-      )}
+      </div>
+      <audio 
+        ref={audioRef}
+        src={song.src}
+        loop
+      />
     </div>
   )
 }

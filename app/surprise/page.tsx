@@ -7,6 +7,30 @@ import dynamic from 'next/dynamic'
 
 const ReactConfetti = dynamic(() => import('react-confetti'), { ssr: false })
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { 
+      when: "beforeChildren",
+      staggerChildren: 0.2
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10
+    }
+  }
+}
+
 export default function SurprisePage() {
   const router = useRouter()
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
@@ -33,27 +57,28 @@ export default function SurprisePage() {
   }, [router])
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-300 to-pink-300">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-300 to-pink-300"
+    >
       <ReactConfetti width={windowSize.width} height={windowSize.height} />
       <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
+        variants={itemVariants}
         className="text-center"
       >
         <h1 className="text-4xl font-bold text-pink-600 mb-4 font-playfair">Happy Birthday, Eesha!</h1>
         <p className="text-xl text-blue-600 mb-8">You&apos;ve unlocked your special surprise!</p>
         <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          variants={itemVariants}
         >
           <p className="text-lg text-pink-500">
             I love you more than words can express. Here&apos;s to another year of joy, laughter, and love together!
           </p>
         </motion.div>
       </motion.div>
-    </div>
+    </motion.div>
   )
 }
 
