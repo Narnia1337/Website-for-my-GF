@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { Button } from "@/components/ui/button"
@@ -22,7 +22,7 @@ const mapLocations: MapLocation[] = [
   {
     id: 'haraz',
     name: 'Haraz',
-    description: 'You recorded this video when we were on driving around after Haraz',
+    description: 'You recorded this video when we were driving around after Haraz',
     media: '/haraz.MOV',
     coords: [29.5834801863353, -95.6488065312987]
   },
@@ -93,10 +93,23 @@ const mapLocations: MapLocation[] = [
 
 export function LoveMap() {
   const [selectedLocation, setSelectedLocation] = useState<MapLocation | null>(null)
+  const [preloadedImages, setPreloadedImages] = useState<Set<string>>(new Set())
 
   const isVideo = (file: string) => {
     return file.toLowerCase().endsWith('.mov') || file.toLowerCase().endsWith('.mp4')
   }
+
+  // Preload images
+  useEffect(() => {
+    mapLocations.forEach(location => {
+      if (!isVideo(location.media) && !preloadedImages.has(location.media)) {
+        const img = new window.Image()
+        img.crossOrigin = "anonymous"
+        img.src = location.media
+        setPreloadedImages(prev => new Set([...prev, location.media]))
+      }
+    })
+  }, [preloadedImages])
 
   const handleLocationClick = (location: MapLocation) => {
     setSelectedLocation(location)
@@ -142,6 +155,7 @@ export function LoveMap() {
                   width={200}
                   height={150}
                   className="w-full h-auto max-h-[300px] object-contain"
+                  priority
                 />
               )}
             </div>

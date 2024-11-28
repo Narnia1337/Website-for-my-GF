@@ -7,7 +7,7 @@ const song = {
   title: "Get You (feat. Kali Uchis)",
   artist: "Daniel Caesar",
   src: "/get-you.mp3",  // Replace with the actual path to your MP3 file
-  startTime: 0  // Set this to the desired start time in seconds
+  startTime: 1 // Set this to the desired start time in seconds
 }
 
 export function MusicPlayer() {
