@@ -106,7 +106,7 @@ export function LoveMap() {
         const img = new window.Image()
         img.crossOrigin = "anonymous"
         img.src = location.media
-        setPreloadedImages(prev => new Set([...prev, location.media]))
+        setPreloadedImages(prev => new Set(Array.from(prev).concat(location.media)))
       }
     })
   }, [preloadedImages])
