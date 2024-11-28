@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
@@ -22,6 +22,10 @@ export function PhotoGallery() {
   const galleryRef = useRef<HTMLDivElement>(null)
   const photoRefs = useRef<(HTMLDivElement | null)[]>([])
 
+  const setPhotoRef = useCallback((index: number) => (el: HTMLDivElement | null) => {
+    photoRefs.current[index] = el
+  }, [])
+
   useEffect(() => {
     const observers = photoRefs.current.map((ref, index) => {
       if (!ref) return null
@@ -29,10 +33,9 @@ export function PhotoGallery() {
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            // Add a delay based on the index
             setTimeout(() => {
               setVisiblePhotos(prev => [...prev, photos[index]])
-            }, index * 500) // 1 second delay between each photo
+            }, index * 750) // 1 second delay between each photo
             observer.disconnect()
           }
         },
@@ -62,7 +65,7 @@ export function PhotoGallery() {
           {photos.map((photo, index) => (
             <div
               key={photo}
-              ref={el => photoRefs.current[index] = el}
+              ref={setPhotoRef(index)}
               className="relative aspect-[3/4]"
             >
               {visiblePhotos.includes(photo) && (
