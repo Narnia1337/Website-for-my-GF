@@ -22,7 +22,7 @@ export default function FullEssayPage() {
           <div className="prose prose-lg prose-pink mx-auto font-handwriting whitespace-pre-wrap">
             {`My dearest Eesha,
 
-I feel love, and I have a pen in my hand to write for you. I am so deeply in love with you. As overwhelming as my feelings might be, I still find myself struggling to put my exact sentiments into words. Still, I will attempt to describe just how much you mean to me. Today is your birthday, and thus, I wish to woo you with a walk through the story of our love and the numerous ways that made you such a dear to me.
+I am so deeply in love with you. As overwhelming as my feelings might be, I still find myself struggling to put my exact sentiments into words. Still, I will attempt to describe just how much you mean to me. Today is your birthday, and thus, I wish to woo you with a walk through the story of our love and the numerous ways that made you such a dear to me.
 
 I first met you over six months ago, and all you did was fix my Einstein wig. Who knew something as simple as a dress-up event for class would bring the most beautiful girl in the world into my life? Ever since that day, I have realized that you are the one who adds beauty to my life. Your smile, laughter, and pretty eyes entrap me; I've been in love since.
 
