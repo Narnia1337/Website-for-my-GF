@@ -17,7 +17,7 @@ export function LoginForm() {
     event.preventDefault()
     setIsLoading(true)
 
-    if (password.toLowerCase() === 'EDhairyawan706') {
+    if (password.toLowerCase() === 'eesharocks$$706') {
       setTimeout(() => {
         router.push('/surprise')
       }, 1000)
