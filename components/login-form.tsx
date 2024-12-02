@@ -17,7 +17,7 @@ export function LoginForm() {
     event.preventDefault()
     setIsLoading(true)
 
-    if (password.toLowerCase() === '1210') {
+    if (password.toLowerCase() === 'eesharocks$$706') {
       setTimeout(() => {
         router.push('/surprise')
       }, 1000)
@@ -50,7 +50,7 @@ export function LoginForm() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.6 }}
       >
-        Welcome, Eesha!
+        Welcome!
       </motion.h2>
       <motion.p 
         className="text-center text-blue-600 mb-8"
@@ -66,7 +66,7 @@ export function LoginForm() {
           <Input 
             id="password" 
             type="password" 
-            placeholder="Enter your special day" 
+            placeholder="Only you will know" 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="bg-white/50 text-blue-600 placeholder-blue-300 border-pink-200 focus:border-pink-400 focus:ring-pink-400"
@@ -86,7 +86,6 @@ export function LoginForm() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.6 }}
       >
-        Hint: It&apos;s my phone password ❤️ (Format: ####)
       </motion.p>
     </motion.div>
   )
