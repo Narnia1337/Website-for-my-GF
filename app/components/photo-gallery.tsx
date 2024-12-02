@@ -35,7 +35,7 @@ export function PhotoGallery() {
           if (entry.isIntersecting) {
             setTimeout(() => {
               setVisiblePhotos(prev => [...prev, photos[index]])
-            }, index * 750) // 1 second delay between each photo
+            }, index * 500) // 1 second delay between each photo
             observer.disconnect()
           }
         },
