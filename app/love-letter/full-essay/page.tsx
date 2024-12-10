@@ -1,26 +1,47 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { EnvelopeAnimation } from '@/app/components/envelope-animation'
+import { AnimatedBackground } from '@/app/components/animated-background'
 
 export default function FullEssayPage() {
+  const [showContent, setShowContent] = useState(false)
+
+  const handleAnimationComplete = () => {
+    setShowContent(true)
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 to-blue-100 py-16 px-4 sm:px-6 lg:px-8">
-      <Link href="/love-letter" className="inline-flex items-center text-pink-600 hover:text-pink-700 mb-8">
-        <ArrowLeft className="w-5 h-5 mr-2" />
-        Back to Our Love Story
-      </Link>
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-3xl mx-auto bg-white rounded-lg shadow-2xl overflow-hidden"
-      >
-        <div className="p-8 sm:p-12">
-          <h1 className="text-4xl font-bold text-center text-pink-600 mb-8 font-playfair">My Love Letter to You</h1>
-          <div className="prose prose-lg prose-pink mx-auto font-handwriting whitespace-pre-wrap">
-            {`My dearest Eesha,
+    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <AnimatedBackground />
+      <div className="absolute inset-0 bg-gradient-to-br from-pink-100/70 to-purple-100/70 z-0" />
+      <AnimatePresence mode="wait">
+        {!showContent && <EnvelopeAnimation onAnimationComplete={handleAnimationComplete} />}
+        {showContent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+            className="relative z-10"
+          >
+            <Link href="/love-letter" className="inline-flex items-center text-pink-600 hover:text-pink-700 mb-8">
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Back to Our Love Story
+            </Link>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden"
+            >
+              <div className="p-8 sm:p-12">
+                <h1 className="text-4xl font-bold text-center text-pink-600 mb-8 font-playfair">My Love Letter to You</h1>
+                <div className="prose prose-lg prose-pink mx-auto font-handwriting whitespace-pre-wrap">
+                  {`My dearest Eesha,
 
 I am so deeply in love with you. As overwhelming as my feelings might be, I still find myself struggling to put my exact sentiments into words. Still, I will attempt to describe just how much you mean to me. Today is your birthday, and thus, I wish to woo you with a walk through the story of our love and the numerous ways that made you such a dear to me.
 
@@ -46,9 +67,12 @@ Happy birthday. I cannot wait for what the future holds for us.
 
 With endless love,
 Devesh`}
-          </div>
-        </div>
-      </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
