@@ -1,0 +1,111 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    overflow: hidden;
+    z-index: 1000;
+  }
+  
+  .envelope {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background-color: #f9a8d4;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transform: translateX(-150vw) rotate(-5deg);
+    transition: transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 1s ease-out;
+    opacity: 1;
+  }
+  
+  .envelope.fly-in {
+    transform: translateX(0) rotate(0);
+  }
+  
+  .envelope.open,
+  .envelope.letter-out,
+  .envelope.letter-transform {
+    transform: translateX(0) rotate(0);
+  }
+  
+  .envelope.letter-transform {
+    opacity: 0;
+  }
+  
+  .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    border-top: 100px solid #f472b6;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    transform-origin: top;
+    transition: transform 0.5s ease-in-out;
+    z-index: 2;
+  }
+  
+  .envelope.open .flap {
+    transform: rotateX(180deg);
+  }
+  
+  .pocket {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    border-bottom: 100px solid #f472b6;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+  }
+  
+  .letter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 280px;
+    height: 180px;
+    background-color: white;
+    transform: translate(-50%, -50%) scale(0.95);
+    transition: all 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    z-index: 1;
+  }
+  
+  .letter.letter-out {
+    transform: translate(-50%, -150%) scale(1.1);
+  }
+  
+  .letter.letter-transform {
+    transform: translate(-50%, -50%) scale(20);
+    opacity: 0;
+  }
+  
+  .letterContent {
+    padding: 20px;
+    text-align: center;
+    color: #db2777;
+  }
+  
+  .letterContent h2 {
+    font-family: var(--font-playfair);
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .letterContent p {
+    font-family: var(--font-handwriting);
+    font-size: 18px;
+  }
+  
+  .container.letter-transform {
+    pointer-events: none;
+  }
+  
+  
